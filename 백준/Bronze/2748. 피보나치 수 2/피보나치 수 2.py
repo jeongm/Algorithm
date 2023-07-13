@@ -1,12 +1,7 @@
-def fibonacci(n) :
-	if dp[n] != 0 :
-		return dp[n]
-	dp[n] = fibonacci(n-1) + fibonacci(n-2)
-	return dp[n]
+n = int(input())
 
-dp = [0]*100
-dp[0] = dp[1] = 1
+fibo = [1,1]
 
-N = int(input())
-fibonacci(N-1)
-print(dp[N-1])
+for i in range(2, n):
+        fibo.append(fibo[i-1] + fibo[i-2])
+print(fibo[-1])
