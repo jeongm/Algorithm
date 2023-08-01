@@ -1,12 +1,28 @@
-from itertools import combinations
+N, K = map(int,input().split())
+chickens = [list(map(int,input().split())) for _ in range(N)]
 
-N,M= map(int,input().split()) # 회원 수, 치킨 종류 수
-like = [list(map(int, input().split())) for _ in range(N)]
+max_like = 0
+visit=[0] * K
 
-maxlike = 0
-for p1,p2,p3 in combinations(range(M),3):
-    sum=0
-    for i in range(N):
-        sum += max(like[i][p1],like[i][p2],like[i][p3])
-    maxlike =  max(sum,maxlike)
-print(maxlike)
+select=[]
+
+def dfs(depth):
+    global max_like
+    if depth > 2:
+        people_like = [0] * N
+        for i in range(K):
+            if visit[i] == 1:   
+                for j in range(N):
+                    people_like[j] = max(people_like[j],chickens[j][i])
+        max_like = max(max_like,sum(people_like))
+        return
+    for i in range(K):
+        if visit[i] == 1:
+            continue
+        visit[i] = 1
+        dfs(depth+1)
+        visit[i] = 0
+
+dfs(0)
+
+print(max_like)
