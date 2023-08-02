@@ -1,29 +1,26 @@
 M, N  = map(int,input().split())
 chessboard = [input() for _ in range(M)]
 
-min_change = M*N//2
+recnt = 32
 
-def chessdraw(x,y):
-    global min_change
-    if chessboard[0][0] == "W":
-        start = "WB"
-    else :
-        start = "BW"
+def repaint(board,recnt):
+    bstart = ['BWBWBWBW','WBWBWBWB','BWBWBWBW','WBWBWBWB','BWBWBWBW','WBWBWBWB','BWBWBWBW','WBWBWBWB']
+    wstart = ['WBWBWBWB','BWBWBWBW','WBWBWBWB','BWBWBWBW','WBWBWBWB','BWBWBWBW','WBWBWBWB','BWBWBWBW']
 
-    change = 0
+    bcnt = wcnt = 0
     for i in range(8):
         for j in range(8):
-            if j%2 == 0 and chessboard[i+x][j+y] != start[0]:
-                change+=1
-            elif j%2 == 1 and chessboard[i+x][j+y] != start[1]:
-                change +=1
-        start = start[::-1]
-    
-    min_change = min(min_change,change,64-change)
-    
+            if board[i][j] != bstart[i][j]:
+                bcnt +=1
+            if board[i][j] != wstart[i][j]:
+                wcnt +=1
+    return min(recnt, bcnt, wcnt)
 
-for i in range(M-8+1):
-    for j in range(N-8+1):
-        chessdraw(i,j)
+for i in range(M-7):
+    for j in range(N-7):
+        board = []
+        for k in range(8):
+            board.append(chessboard[i+k][j:j+8])
+        recnt = repaint(board,recnt)    
 
-print(min_change)
+print(recnt)
