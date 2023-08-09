@@ -1,7 +1,8 @@
 from heapq import heappush, heappop
+import sys
 
 N = int(input())
-lecture = [list(map(int,input().split())) for _ in range(N)]
+lecture = [list(map(int,sys.stdin.readline().split())) for _ in range(N)]
 
 lecture.sort()
 
