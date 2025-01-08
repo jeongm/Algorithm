@@ -17,34 +17,35 @@ public class Main {
                 int dcmCnt = Integer.parseInt(st.nextToken());
                 int wonderDcm = Integer.parseInt(st.nextToken());
 
-                Queue<Integer> dcmQueue = new LinkedList<>();
-                Queue<Integer> imprtDcmQueue = new LinkedList<>();
+                Queue<int[]> dcmQueue = new LinkedList<>();
                 st = new StringTokenizer(br.readLine());
                 for(int j = 0; j < dcmCnt; j++) {
-                    dcmQueue.add(j);
-                    imprtDcmQueue.add(Integer.parseInt(st.nextToken()));
+                    int imprt = Integer.parseInt(st.nextToken());
+                    dcmQueue.add(new int[]{j,imprt});
                 }
 
                 int printCnt = 0;
-                while(!imprtDcmQueue.isEmpty()) {
-                    int imprtDcm = imprtDcmQueue.poll();
-                    int dcm = dcmQueue.poll();
-                    if(imprtDcmQueue.isEmpty() || imprtDcm >= Collections.max(imprtDcmQueue) ) {
-                        if(dcm == wonderDcm) {
-                            System.out.println(++printCnt);
+                while(!dcmQueue.isEmpty()) {
+                    int[] dcm = dcmQueue.poll();
+                    boolean maxCheck = true;
+                    for(int[] od : dcmQueue) {
+                        if(dcm[1] < od[1]){
+                            maxCheck = false;
                             break;
                         }
+                    }
+                    if(maxCheck) {
                         printCnt++;
+                        if(dcm[0] == wonderDcm) {
+                            System.out.println(printCnt);
+                            break;
+                        }
                     }else {
-                        imprtDcmQueue.add(imprtDcm);
                         dcmQueue.add(dcm);
                     }
                 }
 
             }
-
-
-            
     }
 
 }
