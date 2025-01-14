@@ -1,53 +1,50 @@
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 
-public class Main {    
-
-    public static void main(String[] args) throws Exception {
+public class Main {
+        public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         
-        String str = br.readLine();
-        String result ="";
-                
-        boolean flag = true;
+        String S = br.readLine();
+
+        ArrayList<String> wordList = new ArrayList<>();
         String word="";
-        
-        for(int i = 0; i < str.length(); i++) {
-            if(str.charAt(i) == '<') {
-                flag = false;
-                StringBuffer sb = new StringBuffer(word);
-                result += sb.reverse().toString();
-                word = "";
-            }
-            else if (str.charAt(i) == '>') {
-                flag = true;
-                result += str.charAt(i);
-                continue;
-            }
-
-            if(flag == false) {
-                result += str.charAt(i);
-            }
-            else {
-                if(str.charAt(i) == ' ') {
-                    StringBuffer sb = new StringBuffer(word);
-                    result += sb.reverse().toString() + ' ';
+        for(int i = 0; i < S.length(); i++) {
+            if(S.charAt(i) == '<') {
+                if(!word.isBlank()) {
+                    wordList.add(reverseString(word));
                     word = "";
-                }
-                else {
-                    word+=str.charAt(i);
-                }
+                }wordList.add(String.valueOf(S.charAt(i)));
                 
-            }
+            }else if(S.charAt(i) == '>'){ 
+                wordList.add(word);
+                wordList.add(">");
+                word = "";
+            }else {
+                word+=S.charAt(i);
+            }   
+        }
+        if(!word.isBlank()) {
+            wordList.add(reverseString(word));
+            word = "";
         }
 
-        if(word.length() != 0) {
-            StringBuffer sb = new StringBuffer(word);
-            result += sb.reverse().toString();
-        }
-
-        System.out.println(result);
+        System.out.println(String.join("", wordList));
 
     }
 
+    /**
+     * 문자열을 입력받아 공백으로 분리 후 각각 reverse 후 join
+     * @param str 뒤집고 싶은 문자열
+     * @return 뒤집은 문자열
+     */
+    static String reverseString(String str) {
+        String[] splitList = str.split(" ");
+            for(int j = 0; j < splitList.length; j++) {
+                String revStr = new StringBuilder(splitList[j]).reverse().toString();
+                splitList[j] = revStr;
+            }
+        return String.join(" ",splitList);
+    }
 }
