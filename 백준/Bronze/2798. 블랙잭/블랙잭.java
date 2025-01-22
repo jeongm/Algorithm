@@ -1,37 +1,34 @@
-import java.util.ArrayList;
-import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.util.StringTokenizer;
 
 public class Main {
     public static void main(String[] args) throws Exception {
-        Scanner sc = new Scanner(System.in);
-
-        int N = sc.nextInt();
-        int M = sc.nextInt(); 
-        ArrayList<Integer> cards = new ArrayList<>();
-
-        for(int i = 0; i < N; i++) 
-            cards.add(sc.nextInt());
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        int N = Integer.parseInt(st.nextToken());  
+        int M = Integer.parseInt(st.nextToken()); 
         
-        ArrayList<Integer> cSum = new ArrayList<>(); 
+        int cards[] = new int[N];
+        st = new StringTokenizer(br.readLine());
+        for(int i =0; i < N; i++) {
+            cards[i] = Integer.parseInt(st.nextToken());
+        }
 
-        for(int i = 0; i < N; i++) {
-            for(int j = i+1; j < N; j++) {
-                for(int r = j+1; r < N ; r++) {
-                    cSum.add(cards.get(i)+cards.get(j)+cards.get(r));
+        int absM[] = {3,M};
+        for(int i = 0; i < N-2; i++) {
+            for(int j = i+1; j < N-1; j++) {
+                for(int r = j + 1 ; r < N; r++) {
+                    int sum = cards[i]+cards[j]+cards[r];
+                    if(sum <= M && absM[1]> M-sum) {
+                        absM[0] = sum; 
+                        absM[1] = M-sum;
+                    }
                 }
             }
         }
-    
-       cSum.sort((a,b) -> b.compareTo(a));
 
-        for(int i = 0; i < cSum.size();i++) {
-            if(cSum.get(i) <= M) {
-                System.out.println(cSum.get(i));
-                break;
-
-            }
-        }        
-
-        sc.close();
+        System.out.println(absM[0]);
+        
     }
 }
