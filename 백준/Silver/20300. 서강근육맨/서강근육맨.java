@@ -17,10 +17,10 @@ public class Main {
         } 
 
         muscleLosses.sort(null);
-        long minMuscleLoss = N%2 == 0? 0:muscleLosses.get(N-1);
-        int MLLen = N%2 == 0 ? N:N-1;
-        for(int i = 0; i < MLLen/2; i++) {
-            long muscleLoss = muscleLosses.get(i) + muscleLosses.get(MLLen-i-1);
+        long minMuscleLoss = N%2 == 0? 0:muscleLosses.remove(N-1);
+        
+        for(int i = 0; i < muscleLosses.size()/2; i++) {
+            long muscleLoss = muscleLosses.get(i) + muscleLosses.get(muscleLosses.size()-i-1);
             minMuscleLoss = Math.max(minMuscleLoss, muscleLoss);
         }
         System.out.println(minMuscleLoss);
