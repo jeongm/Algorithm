@@ -1,5 +1,6 @@
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
 
@@ -21,7 +22,7 @@ public class Main {
         }
 
         long totalPrice = 0;
-        int minFuelPrice = fuelPrices[0];
+        long minFuelPrice = fuelPrices[0];
         for(int i = 0 ; i< N-1; i++){
             totalPrice += minFuelPrice * roadDistances[i];
             if(fuelPrices[i+1] < minFuelPrice){  // 다음 주유소 가격이 지금 가격보다 싸면 변경
@@ -29,10 +30,8 @@ public class Main {
             }
             
         }
-
+        
         System.out.println(totalPrice);
-
-
     }
 
 }
