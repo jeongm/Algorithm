@@ -7,22 +7,23 @@ public class Main {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
         String octalNum = br.readLine();
+        String[] binaryMap = {
+            "000","001","010","011","100","101","110","111"
+        };
 
         StringBuilder binaryNum = new StringBuilder();
         for(int i = 0; i < octalNum.length(); i++){
-            int octalTemp = Integer.parseInt(String.valueOf(octalNum.charAt(i)));
-            String bTemp = "";
-            while(octalTemp != 0){
-                bTemp = octalTemp%2 + bTemp;
-                octalTemp = octalTemp/2;
-            }
-            if(i > 0 && bTemp.length() < 3) {
-                while(bTemp.length() != 3) bTemp = "0" + bTemp;
-            }
-            binaryNum.append(bTemp);
+            int octalTemp = octalNum.charAt(i)-'0';
+            binaryNum.append(binaryMap[octalTemp]);
         }
-        if(binaryNum.length() == 0) binaryNum.append(0);
-        System.out.println(binaryNum);
+
+        int idx = 0;
+        while(idx < binaryNum.length() && binaryNum.charAt(idx) == '0'){
+            idx++;
+        }
+
+        if(octalNum.equals("0")) System.out.println(0);
+        else System.out.println(binaryNum.substring(idx));
 
 
     }
